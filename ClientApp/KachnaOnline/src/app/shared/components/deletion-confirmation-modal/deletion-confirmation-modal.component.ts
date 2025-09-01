@@ -37,6 +37,11 @@ export class DeletionConfirmationModalComponent implements OnInit {
         this.typeText = "Opravdu chcete zrušit všechny napojené stavy na akci";
         this.typeContent = "Stavy budou odstraněny a jejich navázání na akci zrušeno.";
         break;
+      case DeletionType.Cleaning:
+        this.typeTitle = "Smazání úklidu";
+        this.typeText = "Opravdu chcete zrušit úklid";
+        this.typeContent = "Úklid bude smazán.";
+        break;
     }
   }
 }
@@ -46,5 +51,6 @@ export enum DeletionType {
   ClubState,
   LinkedState,
   LinkedStates,
-BoardGame,
+  BoardGame,
+  Cleaning
 }
