@@ -225,6 +225,10 @@ export class AuthenticationService {
     return this.hasRole(RoleTypes.BoardGamesManager);
   }
 
+  isCleaningManager(): boolean {
+    return this.hasRole(RoleTypes.CleaningManager);
+  }
+
   isAdmin(): boolean {
     return this.hasRole(RoleTypes.Admin);
   }

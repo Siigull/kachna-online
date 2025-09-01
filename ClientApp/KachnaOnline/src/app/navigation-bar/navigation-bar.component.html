@@ -62,6 +62,39 @@
           </div>
         </li>
 
+        <li class="nav-item align-self-xl-center align-self-lg-center mr-xl-3 mr-lg-3 mt-xl-0 mt-lg-0 mt-md-3 mt-sm-3 mt-2" *ngIf="authenticationService.isEventsManager()" ngbDropdown>
+          <div ngbDropdown class="d-inline-block btn-block">
+            <div>
+              <div class="btn-group btn-block d-xl-flex d-lg-flex d-md-none d-sm-none d-none">
+                <button type="button" class="btn btn-secondary text-nowrap btn-block
+                d-xl-block d-lg-block d-md-none d-sm-none align-self-md-center d-none" style="text-align:left"
+                        routerLink="cleanings" (click)="isMenuCollapsed = true">Úklidy
+                </button>
+                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split dropdown-menu-right
+                d-xl-block d-lg-block d-md-none d-sm-none d-none"
+                        id="tmp" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        data-reference="parent">
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+              </div>
+                <button class="btn btn-secondary text-nowrap btn-block d-xl-none d-lg-none" style="text-align:left"
+                        ngbDropdownToggle>Úklidy
+                </button>
+            </div>
+            <div class="dropdown-menu dropdown-menu-text dropdown-menu-right" aria-labelledby="tmp" ngbDropdownMenu>
+              <button class="dropdown-item d-lg-none d-xl-none" (click)="isMenuCollapsed = true"
+                      routerLink="cleanings" ngbDropdownItem>Úklidy
+              </button>
+              <button (click)="isMenuCollapsed = true" class="dropdown-item" routerLink="/cleanings/plan" routerLinkActive="active" ngbDropdownItem>
+                Naplánovat úklid
+              </button>
+              <button (click)="isMenuCollapsed = true" class="dropdown-item" routerLink="/cleanings/archive" routerLinkActive="active" ngbDropdownItem>
+                Archiv úklidů
+              </button>
+            </div>
+          </div>
+        </li>
+
         <li class="nav-item align-self-xl-center align-self-lg-center mr-xl-3 mr-lg-3 mt-xl-0 mt-lg-0 mt-md-3 mt-sm-3 mt-2" ngbDropdown>
           <div ngbDropdown class="d-inline-block btn-block">
             <div>

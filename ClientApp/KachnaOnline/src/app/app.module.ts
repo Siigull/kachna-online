@@ -48,6 +48,8 @@ import {
   CurrentOfferCollapsibleBlockComponent
 } from "./home/current-offer-collapsible-block/current-offer-collapsible-block.component";
 import { TearoomDetailsComponent } from "./home/tearoom-details/tearoom-details.component";
+import { CleaningManagerGuard } from './cleaning/cleaning-manager.guard';
+import { CleaningModule } from './cleaning/cleaning.module';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -97,6 +99,7 @@ export function tokenGetter(request?: HttpRequest<any>) {
     BoardGamesModule,
     UsersModule,
     EventsModule,
+    CleaningModule,
     BrowserModule,
     NgbModule,
     HttpClientModule,
