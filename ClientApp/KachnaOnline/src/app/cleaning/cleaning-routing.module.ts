@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PlanCleaningComponent } from "./plan-cleaning/plan-cleaning.component";
 import { CleaningManagerGuard } from "./cleaning-manager.guard";
+import { CurrentCleaningsComponent } from "./current-cleanings/current-cleanings.component";
+import { CleaningsArchiveComponent } from "./cleanings-archive/cleanings-archive.component";
 // import { CleaningArchiveComponent } from "./cleaning-archive/cleaning-archive.component";
 
 const routes: Routes = [
@@ -11,12 +13,15 @@ const routes: Routes = [
       {
         path: '',
         children: [
-          // {
-          //   path: '',
-          //   redirectTo: 'archive',
-          //   pathMatch: 'full'
-          // }
-          { 
+          {
+            path: 'current',
+            component: CurrentCleaningsComponent,
+            data: {
+              title: `${environment.siteName} | Aktuální úklidy`,
+              description: 'Přehled probíhajících úklidů',
+            }
+          },
+          {
             path: 'plan',
             component: PlanCleaningComponent,
             canActivate: [CleaningManagerGuard],
@@ -25,12 +30,39 @@ const routes: Routes = [
               description: 'Plánování nového úklidu',
             }
           },
-          // { 
-          //   path: 'archive',
-          //   component: CleaningArchiveComponent,
+          { 
+            path: 'archive',
+            component: CleaningsArchiveComponent,
+            data: {
+              title: `${environment.siteName} | Archiv úklidů`,
+              description: 'Přehled proběhlých úklidů',
+            }
+          },
+          // {
+          //   path: ':cleaningId',
+          //   pathMatch: 'full',
+          //   component: CleaningDetailComponent,
           //   data: {
-          //     title: `${environment.siteName} | Archiv úklidů`,
-          //     description: 'Přehled minulých úklidů',
+          //     title: `${environment.siteName} | Detail úklidu`,
+          //     description: 'Detailní popis úklidu',
+          //   },
+          //   children: [
+          //     {
+          //       path: '',
+          //       component: CleaningDetailComponent,
+          //       children: [
+          //       ]
+          //     }
+          //   ]
+          // },
+          // {
+          //   path: ':cleaningId/edit',
+          //   pathMatch: 'full',
+          //   component: EditCleaningsComponent,
+          //   canActivate: [CleaningsManagerGuard],
+          //   data: {
+          //     title: `${environment.siteName} | Úprava úklidu`,
+          //     description: 'Úprava existujícího úklidu',
           //   }
           // },
         ]
