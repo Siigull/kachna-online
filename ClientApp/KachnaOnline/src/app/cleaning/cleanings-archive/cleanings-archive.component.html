@@ -1,0 +1,73 @@
+<h1>Přehled úklidů</h1>
+
+<app-year-selection (yearChange)="this.yearChanged($event)"
+                     [justifyCenter]="false"></app-year-selection>
+
+<div class="d-flex align-items-center">
+  <span class="dot bg-success"></span>
+  <span class="mr-4">Archiv úklidů</span>
+</div>
+
+<table class="table table-stripped" *ngIf="cleanings.length > 0">
+  <thead class="thead-light">
+  <tr>
+    <th>Jméno</th>
+    <th>Začátek</th>
+    <th>Konec</th>
+    <th>Místo</th>
+    <th>Instrukce</th>
+    <th *ngIf="authenticationService.isEventsManager()">Operace</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let cleaningDetail of cleanings" class="clickable"
+    [ngClass]="{
+    'table-secondary': cleaningDetail.to.getTime() < now.getTime(),
+    'table-success': cleaningDetail.from.getTime() < now.getTime() && cleaningDetail.to.getTime() >= now.getTime()
+    }"
+  >
+
+  <td (click)="openCleaningDetail(cleaningDetail)">{{cleaningDetail.name}}</td>
+    <td (click)="openCleaningDetail(cleaningDetail)">
+      {{cleaningDetail.from | date:'d. M. yyyy HH:mm'}}
+    </td>
+    <td (click)="openCleaningDetail(cleaningDetail)">
+      {{cleaningDetail.to | date:'d. M. yyyy HH:mm'}}
+    </td>
+    <td (click)="openCleaningDetail(cleaningDetail)">
+      {{cleaningDetail.place}}
+    </td>
+    <td (click)="openCleaningDetail(cleaningDetail)">
+      <div *ngIf="cleaningDetail.cleaningInstructions.length > maxCleaningInstructionsChars">
+        {{cleaningDetail.cleaningInstructions.slice(0, maxCleaningInstructionsChars)}}...
+        <button type="button" class="btn btn-outline-secondary mt-1 note-button" [ngbPopover]="cleaningDetail.cleaningInstructions"
+                (click)="$event.stopPropagation();" popoverTitle="Zkrácené instrukce k úklidu" placement="auto">
+          Celé instrukce
+        </button>
+      </div>
+      <div *ngIf="cleaningDetail.cleaningInstructions.length <= maxCleaningInstructionsChars">
+        {{cleaningDetail.cleaningInstructions}}
+      </div>
+
+    </td>
+    <td *ngIf="authenticationService.isEventsManager()">
+      <div class="row" *ngIf="cleaningDetail.to.getTime() > now.getTime()">
+        <button type="button" class="btn mr-1 btn-primary float-right"
+                data-toggle="modal" data-target="#exampleModal"
+                data-backdrop="static" data-keyboard="false" (click)="onModifyButtonClicked(cleaningDetail)">
+          <i class="far fa-edit"></i>
+          Upravit
+        </button>
+        <button type="button" class="btn btn-danger" (click)="onDeleteButtonClicked(cleaningDetail)">
+          <i class="far fa-trash-alt"></i>
+          Odstranit
+        </button>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<div *ngIf="cleanings.length == 0" class="mb-5 d-flex justify-content-center">
+  <h5 class="text-secondary ">Tento rok se zatím nekonají žádné úklidy.</h5>
+</div>

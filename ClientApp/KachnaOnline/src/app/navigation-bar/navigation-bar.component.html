@@ -68,7 +68,7 @@
               <div class="btn-group btn-block d-xl-flex d-lg-flex d-md-none d-sm-none d-none">
                 <button type="button" class="btn btn-secondary text-nowrap btn-block
                 d-xl-block d-lg-block d-md-none d-sm-none align-self-md-center d-none" style="text-align:left"
-                        routerLink="cleanings" (click)="isMenuCollapsed = true">Úklidy
+                        routerLink="cleanings/current" (click)="isMenuCollapsed = true">Úklidy
                 </button>
                 <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split dropdown-menu-right
                 d-xl-block d-lg-block d-md-none d-sm-none d-none"
@@ -83,7 +83,7 @@
             </div>
             <div class="dropdown-menu dropdown-menu-text dropdown-menu-right" aria-labelledby="tmp" ngbDropdownMenu>
               <button class="dropdown-item d-lg-none d-xl-none" (click)="isMenuCollapsed = true"
-                      routerLink="cleanings" ngbDropdownItem>Úklidy
+                      routerLink="cleanings/list" ngbDropdownItem>Úklidy
               </button>
               <button (click)="isMenuCollapsed = true" class="dropdown-item" routerLink="/cleanings/plan" routerLinkActive="active" ngbDropdownItem>
                 Naplánovat úklid

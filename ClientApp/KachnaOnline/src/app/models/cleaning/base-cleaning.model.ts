@@ -4,4 +4,7 @@ export class BaseCleaning {
   place: string = "";
   cleaningInstructions: string = "";
   madeById: string = "";
+  assignedUsersIds: string[] | null = [];
+  idealParticipantsCount: number | null = null;
+  finished: boolean = false;
 }

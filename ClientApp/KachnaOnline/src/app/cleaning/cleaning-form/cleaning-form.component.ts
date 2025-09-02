@@ -63,6 +63,8 @@ export class CleaningFormComponent implements OnInit {
     name: ["", [Validators.required, Validators.maxLength(128)]],
     cleaningInstructions: [""],
     place: ["", Validators.maxLength(256)],
+    assignedUsersIds: [[]],
+    idealParticipantsCount: [3, [Validators.required, Validators.min(1), Validators.max(100)]],
     fromDate: [this.calendar.getToday(), Validators.required],
     fromTime: [{hour: new Date().getHours(), minute: new Date().getMinutes()}, Validators.required],
     toDate: [this.calendar.getToday(), Validators.required],
@@ -86,6 +88,8 @@ export class CleaningFormComponent implements OnInit {
             this.form.controls.name.setValue(edittedCleaning.name);
             this.form.controls.cleaningInstructions.setValue(edittedCleaning.cleaningInstructions);
             this.form.controls.place.setValue(edittedCleaning.place);
+            this.form.controls.assignedUsersIds.setValue(edittedCleaning.assignedUsersIds);
+            this.form.controls.idealParticipantsCount.setValue(edittedCleaning.idealParticipantsCount);
             this.form.controls.fromDate.setValue(this.nativeDateAdapter.fromModel(edittedCleaning.from));
             this.form.controls.fromTime.setValue({
               hour: edittedCleaning.from.getHours(),
@@ -117,6 +121,8 @@ export class CleaningFormComponent implements OnInit {
     cleaningData.name = formVal.name;
     cleaningData.place = formVal.place;
     cleaningData.cleaningInstructions = formVal.cleaningInstructions;
+    cleaningData.assignedUsersIds = formVal.assignedUsersIds;
+    cleaningData.idealParticipantsCount = formVal.idealParticipantsCount;
 
     // Process date and time values.
     const from = this.joinDateTime(formVal.fromDate, formVal.fromTime);
