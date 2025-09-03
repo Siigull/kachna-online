@@ -14,6 +14,7 @@ namespace KachnaOnline.Business.Data.Repositories.Abstractions
         IReservationItemRepository ReservationItems { get; }
         IReservationItemEventRepository ReservationItemEvents { get; }
         IEventsRepository Events { get; }
+        ICleaningsRepository Cleanings { get; }
         IPushSubscriptionsRepository PushSubscriptions { get; }
 
         Task SaveChanges();

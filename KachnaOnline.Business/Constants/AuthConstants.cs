@@ -11,6 +11,8 @@ namespace KachnaOnline.Business.Constants
         // Name of role for managers of board games.
         public const string BoardGamesManager = "BoardGamesManager";
 
+        public const string CleaningsManager = "CleaningsManager";
+
         // Name of role for admins of the whole system.
         public const string Admin = "Admin";
 

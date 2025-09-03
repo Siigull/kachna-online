@@ -35,6 +35,9 @@ namespace KachnaOnline.Business.Data.Repositories
         private IEventsRepository _events;
         public IEventsRepository Events => _events ??= new EventsRepository(_dbContext);
 
+        private ICleaningsRepository _cleanings;
+        public ICleaningsRepository Cleanings => _cleanings??= new CleaningsRepository(_dbContext);
+
         public IReservationRepository _reservations;
         public IReservationRepository Reservations => _reservations ??= new ReservationRepository(_dbContext);
 
