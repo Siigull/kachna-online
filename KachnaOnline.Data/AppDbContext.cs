@@ -1,6 +1,7 @@
 using KachnaOnline.Data.Entities.BoardGames;
 using KachnaOnline.Data.Entities.ClubStates;
 using KachnaOnline.Data.Entities.Events;
+using KachnaOnline.Data.Entities.Cleanings;
 using KachnaOnline.Data.Entities.PushSubscriptions;
 using KachnaOnline.Data.Entities.Users;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace KachnaOnline.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Event> Events { get; set; }
+        public DbSet<Cleaning> Cleanings { get; set; }
         public DbSet<PlannedState> PlannedStates { get; set; }
         public DbSet<RepeatingState> RepeatingStates { get; set; }
         public DbSet<BoardGame> BoardGames { get; set; }
@@ -104,6 +106,13 @@ namespace KachnaOnline.Data
 
             // Events
             builder.Entity<Event>()
+                .HasOne(e => e.MadeBy)
+                .WithMany()
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Cleanings
+            builder.Entity<Cleaning>()
                 .HasOne(e => e.MadeBy)
                 .WithMany()
                 .IsRequired()

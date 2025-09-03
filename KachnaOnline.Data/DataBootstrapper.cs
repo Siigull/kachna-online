@@ -770,6 +770,7 @@ namespace KachnaOnline.Data
                 new Role {Name = "StatesManager"},
                 new Role {Name = "EventsManager"},
                 new Role {Name = "BoardGamesManager"},
+                new Role {Name = "CleaningsManager"},
                 new Role {Name = "Admin"}
             };
 

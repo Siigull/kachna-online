@@ -73,6 +73,7 @@ namespace KachnaOnline.App
             services.Configure<PushOptions>(this.Configuration.GetSection("Push"));
             services.Configure<MailOptions>(this.Configuration.GetSection("Mail"));
             services.Configure<EventsOptions>(this.Configuration.GetSection("Events"));
+            services.Configure<CleaningsOptions>(this.Configuration.GetSection("Cleanings"));
 
             // Configures custom rules for Serilog's request logging.
             services.ConfigureSerilogRequestLogging();
@@ -113,7 +114,7 @@ namespace KachnaOnline.App
             {
                 options.AddPolicy(AuthConstants.AnyManagerPolicy, policy =>
                     policy.RequireRole(AuthConstants.Admin, AuthConstants.EventsManager, AuthConstants.StatesManager,
-                        AuthConstants.BoardGamesManager));
+                        AuthConstants.BoardGamesManager, AuthConstants.CleaningsManager));
                 options.AddPolicy(AuthConstants.AdminOrBoardGamesManagerPolicy, policy =>
                     policy.RequireRole(AuthConstants.Admin, AuthConstants.BoardGamesManager));
             });

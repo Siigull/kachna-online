@@ -24,7 +24,7 @@ namespace KachnaOnline.Business.Extensions
         {
             // Add AutoMapper and load mapping profiles from this assembly.
             services.AddAutoMapper(typeof(UserMappings), typeof(KisMappings), typeof(BoardGamesMappings),
-                typeof(EventMappings), typeof(PushSubscriptionMappings));
+                typeof(EventMappings), typeof(CleaningMappings), typeof(PushSubscriptionMappings));
 
             // Add KIS HTTP client factory.
             var kisOptions = configuration.GetSection("Kis").Get<KisOptions>();
@@ -74,6 +74,7 @@ namespace KachnaOnline.Business.Extensions
             services.AddScoped<IClubStateService, ClubStateService>();
             services.AddScoped<IBoardGamesService, BoardGamesService>();
             services.AddScoped<IEventsService, EventsService>();
+            services.AddScoped<ICleaningsService, CleaningsService>();
             services.AddScoped<IPushSubscriptionsService, PushSubscriptionsService>();
 
             // Add facades.
@@ -83,6 +84,7 @@ namespace KachnaOnline.Business.Extensions
             services.AddScoped<PushSubscriptionsFacade>();
             services.AddScoped<BoardGamesFacade>();
             services.AddScoped<EventsFacade>();
+            services.AddScoped<CleaningsFacade>();
             services.AddScoped<UserFacade>();
             services.AddScoped<ImagesFacade>();
         }
