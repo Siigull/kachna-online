@@ -1,0 +1,65 @@
+<ng-container *ngIf="currentCleanings.length > 0">
+  <h1>Probíhající úklidy</h1>
+
+  <div *ngFor="let c of currentCleanings" class="pb-4 container">
+    <div class="row">
+      <div class="col pr-lg-1">
+        <a class="border-bottom d-inline-block h5 text-decoration-none"
+           [routerLink]="['/cleanings', c.id]">{{c.title}}</a>
+
+        <br>
+        <ng-container *ngIf="c.place">
+          místo konání:
+          <ng-container>{{c.place}}</ng-container>
+        </ng-container>
+
+        <ng-template #oneDay>{{c.from | date:'d. M.'}} od {{c.from | date:'HH:mm'}}
+          do {{c.to | date:'HH:mm'}}</ng-template>
+        <ng-template #moreDays>
+          {{c.from | date:'d. M.'}} až {{c.to | date:'d. M.'}}
+        </ng-template>
+
+        <div>
+          {{c.cleaningInstructions}}
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</ng-container>
+
+<h1>Následující úklidy</h1>
+
+<app-month-selection (monthChange)="this.monthChanged($event)" [minMonth]="this.currentMonth"
+                     [justifyCenter]="false"></app-month-selection>
+
+<ng-container *ngIf="shownNextCleanings.length > 0; else noNextCleanings">
+  <div class="row mb-2" *ngFor="let c of shownNextCleanings">
+    <div class="col pr-lg-1">
+        <a class="border-bottom d-inline-block h5 text-decoration-none"
+           [routerLink]="['/cleanings', c.id]">{{c.title}}</a>
+
+        <br>
+        <ng-container *ngIf="c.place">
+          místo konání:
+          <ng-container>{{c.place}}</ng-container>
+        </ng-container>
+
+        <ng-template #oneDay>{{c.from | date:'d. M.'}} od {{c.from | date:'HH:mm'}}
+          do {{c.to | date:'HH:mm'}}</ng-template>
+        <ng-template #moreDays>
+          {{c.from | date:'d. M.'}} až {{c.to | date:'d. M.'}}
+        </ng-template>
+
+        <div>
+          {{c.cleaningInstructions}}
+        </div>
+      </div>
+  </div>
+</ng-container>
+
+<ng-template #noNextCleanings>
+  <h5 class="text-muted" *ngIf="loading">Načítání...</h5>
+  <h5 class="text-muted" *ngIf="!loading">V tomto měsíci nejsou naplánované žádné akce.</h5>
+</ng-template>
