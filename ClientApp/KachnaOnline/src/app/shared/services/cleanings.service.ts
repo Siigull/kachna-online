@@ -22,7 +22,6 @@ export class CleaningsService {
     private http: HttpClient,
     private toastr: ToastrService,
     private _modalService: NgbModal,
-    private statesService: StatesService,
   ) {
   }
 

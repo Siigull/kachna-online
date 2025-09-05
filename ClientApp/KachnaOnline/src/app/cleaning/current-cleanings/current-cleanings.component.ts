@@ -18,11 +18,11 @@ import { UrlUtils } from "../../shared/utils/url-utils";
   styleUrls: ['./current-cleanings.component.css']
 })
 export class CurrentCleaningsComponent implements OnInit {
-  currentCleanings: CleaningItem[] = [];
-  nextCleanings: CleaningItem[] = [];
-  shownNextCleanings: CleaningItem[] = [];
+  cleanings: Cleaning[] = [];
+  grouped: {[place:string]: Cleaning[]} = {};
   currentMonth: Date = new Date();
   loading: boolean = false;
+  now: Date = new Date();
 
   getImageUrl = UrlUtils.getAbsoluteImageUrl;
 
@@ -38,21 +38,13 @@ export class CurrentCleaningsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    this.cleaningsService.getCurrentCleaningsRequest().subscribe(
-      (res: Cleaning[]) => {
-        this.makeCurrentCleanings(res);
-      },
-      (_) => {
-        this.toastrService.error("Nepodařilo se stáhnout aktuální úklidy.", "Stažení úklidů")
-      }
-    );
 
     this.cleaningsService.getMonthCleanings(new Date(), false).subscribe(
       (res: Cleaning[]) => {
-        this.makeNextCleanings(res);
+        this.makeCleanings(res);
       },
       (_) => {
-        this.toastrService.error("Nepodařilo se stáhnout následující úklidy.", "Stažení úklidů")
+        this.toastrService.error("Nepodařilo se stáhnout úklidy.", "Stažení úklidů")
       }
     );
   }
@@ -61,68 +53,41 @@ export class CurrentCleaningsComponent implements OnInit {
     this.router.navigate([`/cleanings/${cleaningDetail.id}`]).then();
   }
 
-  onDeleteButtonClicked(selectedCleaningDetail: Cleaning) {
-    this.cleaningsService.openCleaningDeletionConfirmationModal(selectedCleaningDetail);
+  onJoinButtonClicked(selectedCleaningDetail: Cleaning) {
+    // this.cleaningsService.openCleaningJoinConfirmationModal(selectedCleaningDetail);
   }
 
   onModifyButtonClicked(selectedCleaningDetail: Cleaning) {
     this.router.navigate([`/cleanings/${selectedCleaningDetail.id}/edit`]).then();
   }
 
-  makeCurrentCleanings(cleaningModels: Cleaning[]): void {
-    this.currentCleanings = [];
+  makeCleanings(cleaningModels: Cleaning[]): void {
+    this.cleanings = [];
+    this.grouped = {};
     let waiting: Observable<any>[] = [];
 
-    for (let e of cleaningModels) {
-      let cleaning: CleaningItem = {
-        from: e.from,
-        to: e.to,
-        id: e.id,
-        title: e.name,
-        cleaningInstructions: e.cleaningInstructions,
-        place: e.place,
-        idealParticipantsCount: e.idealParticipantsCount,
-        finished: e.finished,
-        multipleDays: (e.to.getTime() - e.from.getTime() <= 86400000)
-      };
+    for (let c of cleaningModels) {
+      // let cleaning: CleaningItem = {
+      //   from: c.from,
+      //   to: c.to,
+      //   id: c.id,
+      //   title: c.name,
+      //   cleaningInstructions: c.cleaningInstructions,
+      //   place: c.place,
+      //   idealParticipantsCount: c.idealParticipantsCount,
+      //   finished: c.finished,
+      //   multipleDays: (c.to.getTime() - c.from.getTime() <= 86400000)
+      // };
 
-      this.currentCleanings.push(cleaning);
-    }
-
-    forkJoin(waiting).pipe(endWith(null)).subscribe(_ => {
-      this.currentCleanings = this.sortCleanings(this.currentCleanings);
-      //this.loading = false;
-    });
-  }
-
-  makeNextCleanings(cleaningModels: Cleaning[]): void {
-    this.nextCleanings = [];
-    let waiting: Observable<any>[] = [];
-
-    for (let e of cleaningModels) {
-      let cleaning: CleaningItem = {
-        from: e.from,
-        to: e.to,
-        id: e.id,
-        title: e.name,
-        cleaningInstructions: e.cleaningInstructions,
-        place: e.place,
-        idealParticipantsCount: e.idealParticipantsCount,
-        finished: e.finished,
-        multipleDays: (e.to.getTime() - e.from.getTime() <= 86400000)
-      };
-
-      // Skip current cleanings.
-      let now = new Date();
-      if (cleaning.from <= now && cleaning.to >= now) {
-        continue;
+      this.cleanings.push(c);
+      if (!this.grouped[c.place]) {
+        this.grouped[c.place] = [];
       }
-
-      this.nextCleanings.push(cleaning);
+      this.grouped[c.place].push(c);
     }
 
     forkJoin(waiting).pipe(endWith(null)).subscribe(_ => {
-      this.updateNextCleanings();
+      // this.updateNextCleanings();
       this.loading = false;
     });
   }
@@ -132,13 +97,13 @@ export class CurrentCleaningsComponent implements OnInit {
   }
 
   monthChanged(month: Date) {
-    this.cleaningsService.getMonthCleanings(month, false).subscribe(res => this.makeNextCleanings(res));
+    // this.cleaningsService.getMonthCleanings(month, false).subscribe(res => this.makeNextCleanings(res));
   }
 
-  updateNextCleanings(): void {
-    this.update(this.nextCleanings, this.shownNextCleanings);
-    this.shownNextCleanings = this.sortCleanings(this.shownNextCleanings)
-  }
+  // updateNextCleanings(): void {
+  //   this.update(this.nextCleanings, this.shownNextCleanings);
+  //   this.shownNextCleanings = this.sortCleanings(this.shownNextCleanings)
+  // }
 
   update(source: { to: Date }[], target: { to: Date }[]): void {
     const now = new Date().getTime();

@@ -8,6 +8,7 @@ import { CleaningRoutingModule } from './cleaning-routing.module';
 import { CleaningFormComponent } from './cleaning-form/cleaning-form.component';
 import { CurrentCleaningsComponent } from './current-cleanings/current-cleanings.component';
 import { CleaningsArchiveComponent } from './cleanings-archive/cleanings-archive.component';
+import { EditCleaningsComponent } from './edit-cleanings/edit-cleanings.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { CleaningsArchiveComponent } from './cleanings-archive/cleanings-archive
     CleaningFormComponent,
     CurrentCleaningsComponent,
     CleaningsArchiveComponent,
+    EditCleaningsComponent,
   ],
   imports: [
     CommonModule,

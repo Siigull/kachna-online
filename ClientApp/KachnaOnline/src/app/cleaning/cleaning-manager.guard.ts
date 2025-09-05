@@ -16,7 +16,7 @@ export class CleaningManagerGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.authenticationService.hasRole(RoleTypes.EventsManager) || this.authenticationService.hasRole(RoleTypes.Admin)) {
+    if (this.authenticationService.hasRole(RoleTypes.CleaningsManager) || this.authenticationService.hasRole(RoleTypes.Admin)) {
       return true;
     } else {
       return this.router.parseUrl('/forbidden');

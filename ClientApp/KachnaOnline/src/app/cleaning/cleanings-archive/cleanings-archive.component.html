@@ -16,7 +16,7 @@
     <th>Konec</th>
     <th>Místo</th>
     <th>Instrukce</th>
-    <th *ngIf="authenticationService.isEventsManager()">Operace</th>
+    <th *ngIf="authenticationService.isCleaningsManager()">Operace</th>
   </tr>
   </thead>
   <tbody>
@@ -50,7 +50,7 @@
       </div>
 
     </td>
-    <td *ngIf="authenticationService.isEventsManager()">
+    <td *ngIf="authenticationService.isCleaningsManager()">
       <div class="row" *ngIf="cleaningDetail.to.getTime() > now.getTime()">
         <button type="button" class="btn mr-1 btn-primary float-right"
                 data-toggle="modal" data-target="#exampleModal"
