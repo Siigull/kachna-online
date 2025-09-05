@@ -5,7 +5,6 @@ using KachnaOnline.App.Extensions;
 using KachnaOnline.Business.Constants;
 using KachnaOnline.Business.Exceptions;
 using KachnaOnline.Business.Exceptions.Cleanings;
-using KachnaOnline.Business.Exceptions.Events;
 using KachnaOnline.Business.Facades;
 using KachnaOnline.Dto.ClubStates;
 using KachnaOnline.Dto.Cleanings;
@@ -17,7 +16,7 @@ namespace KachnaOnline.App.Controllers
 {
     [ApiController]
     [Route("cleanings")]
-    [Authorize(Roles = AuthConstants.EventsManager)]
+    [Authorize(Roles = AuthConstants.CleaningsManager)]
     public class CleaningsController : ControllerBase
     {
         private readonly CleaningsFacade _cleaningsFacade;
@@ -161,7 +160,7 @@ namespace KachnaOnline.App.Controllers
                 await _cleaningsFacade.ModifyCleaning(id, modifiedCleaning);
                 return this.NoContent();
             }
-            catch (NotAnEventsManagerException)
+            catch (NotACleaningsManagerException)
             {
                 // Shouldn't happen.
                 return this.ForbiddenProblem();
@@ -204,7 +203,7 @@ namespace KachnaOnline.App.Controllers
                 await _cleaningsFacade.RemoveCleaning(id);
                 return this.Ok();
             }
-            catch (NotAnEventsManagerException)
+            catch (NotACleaningsManagerException)
             {
                 // Shouldn't happen.
                 return this.ForbiddenProblem();

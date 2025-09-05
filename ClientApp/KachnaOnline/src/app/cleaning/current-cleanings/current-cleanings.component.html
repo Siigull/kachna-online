@@ -1,65 +1,46 @@
-<ng-container *ngIf="currentCleanings.length > 0">
+<ng-container *ngIf="cleanings.length > 0">
   <h1>Probíhající úklidy</h1>
 
-  <div *ngFor="let c of currentCleanings" class="pb-4 container">
-    <div class="row">
-      <div class="col pr-lg-1">
-        <a class="border-bottom d-inline-block h5 text-decoration-none"
-           [routerLink]="['/cleanings', c.id]">{{c.title}}</a>
+  <table class="table table-bordered">
+    <tbody>
+      <tr *ngFor="let group of grouped | keyvalue">
+        <!-- place column -->
+        <td class="font-weight-bold align-top" style="white-space: nowrap; width: 200px;">
+          {{ group.key }}
+        </td>
 
-        <br>
-        <ng-container *ngIf="c.place">
-          místo konání:
-          <ng-container>{{c.place}}</ng-container>
-        </ng-container>
+        <!-- cleanings horizontally -->
+        <td>
+          <div class="d-flex flex-row flex-wrap">
+            <div *ngFor="let c of group.value" class="card m-2 p-2" style="min-width: 180px;">
+              <a class="h6 text-decoration-none d-block mb-1" [routerLink]="['/cleanings', c.id]">
+                {{ c.name }}
+              </a>
+              <div class="text-muted small">
+                {{ c.from | date:'d. M. HH:mm' }} – {{ c.to | date:'d. M. HH:mm' }}
+              </div>
+              <div class="small">
+                {{ c.cleaningInstructions }}
+              </div>
+              <div class="small" *ngIf="c.to.getTime() > now.getTime()">
+                <button type="button" class="btn mr-1 btn-primary float-right"
+                        data-toggle="modal" data-target="#exampleModal"
+                        data-backdrop="static" data-keyboard="false" (click)="onModifyButtonClicked(c)">
+                  <i class="far fa-edit"></i>
+                  Upravit
+                </button>
+                <button type="button" class="btn btn-danger" (click)="onJoinButtonClicked(c)">
+                  <i class="far fa-calendar-plus"></i>
+                  Připojit
+                </button>
+              </div>
+            </div>
+          </div>
+        </td>
 
-        <ng-template #oneDay>{{c.from | date:'d. M.'}} od {{c.from | date:'HH:mm'}}
-          do {{c.to | date:'HH:mm'}}</ng-template>
-        <ng-template #moreDays>
-          {{c.from | date:'d. M.'}} až {{c.to | date:'d. M.'}}
-        </ng-template>
-
-        <div>
-          {{c.cleaningInstructions}}
-        </div>
-      </div>
-    </div>
-
-  </div>
-
+        
+      </tr>
+    </tbody>
+  </table>
+  
 </ng-container>
-
-<h1>Následující úklidy</h1>
-
-<app-month-selection (monthChange)="this.monthChanged($event)" [minMonth]="this.currentMonth"
-                     [justifyCenter]="false"></app-month-selection>
-
-<ng-container *ngIf="shownNextCleanings.length > 0; else noNextCleanings">
-  <div class="row mb-2" *ngFor="let c of shownNextCleanings">
-    <div class="col pr-lg-1">
-        <a class="border-bottom d-inline-block h5 text-decoration-none"
-           [routerLink]="['/cleanings', c.id]">{{c.title}}</a>
-
-        <br>
-        <ng-container *ngIf="c.place">
-          místo konání:
-          <ng-container>{{c.place}}</ng-container>
-        </ng-container>
-
-        <ng-template #oneDay>{{c.from | date:'d. M.'}} od {{c.from | date:'HH:mm'}}
-          do {{c.to | date:'HH:mm'}}</ng-template>
-        <ng-template #moreDays>
-          {{c.from | date:'d. M.'}} až {{c.to | date:'d. M.'}}
-        </ng-template>
-
-        <div>
-          {{c.cleaningInstructions}}
-        </div>
-      </div>
-  </div>
-</ng-container>
-
-<ng-template #noNextCleanings>
-  <h5 class="text-muted" *ngIf="loading">Načítání...</h5>
-  <h5 class="text-muted" *ngIf="!loading">V tomto měsíci nejsou naplánované žádné akce.</h5>
-</ng-template>
