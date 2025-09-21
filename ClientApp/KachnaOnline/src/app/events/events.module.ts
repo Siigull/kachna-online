@@ -18,6 +18,7 @@ import { EditEventsComponent } from './edit-events/edit-events.component';
 import { NextEventsComponent } from './next-events/next-events.component';
 import { StateLocPipe } from "../shared/pipes/state-loc.pipe";
 import { PipesModule } from "../shared/pipes/pipes.module";
+import {AngularEditorModule} from "@kolkov/angular-editor";
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { PipesModule } from "../shared/pipes/pipes.module";
         FormsModule,
         ComponentsModule,
         PipesModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        AngularEditorModule
     ]
 })
 export class EventsModule {

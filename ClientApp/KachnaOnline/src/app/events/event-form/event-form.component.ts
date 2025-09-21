@@ -17,6 +17,7 @@ import { HttpStatusCode } from "@angular/common/http";
 import { ImageUploadService } from "../../shared/services/image-upload.service";
 import { EventModification } from "../../models/events/event-modification.model";
 import { DateUtils } from "../../shared/utils/date-utils";
+import { AngularEditorConfig } from "@kolkov/angular-editor";
 
 
 @Component({
@@ -35,7 +36,8 @@ export class EventFormComponent implements OnInit {
     private router: Router,
     private imageUploadService: ImageUploadService,
     private fb: FormBuilder
-  ) { }
+  ) {
+  }
 
   dateRangeValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     let start = this.nativeDateAdapter.toModel(control.get('fromDate')?.value);
@@ -97,6 +99,31 @@ export class EventFormComponent implements OnInit {
   jumbotronText: string = "Naplánovat akci";
   submitText: string = "Přidat akci";
   currentImageUrl: string | null = null;
+
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: 'auto',
+    minHeight: '0',
+    maxHeight: 'auto',
+    width: 'auto',
+    minWidth: '0',
+    translate: 'yes',
+    enableToolbar: true,
+    showToolbar: true,
+    placeholder: 'Enter text here...',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: '',
+    defaultFontSize: '',
+    fonts: [],
+    customClasses: [],
+    sanitize: true,
+    toolbarPosition: 'top',
+    toolbarHiddenButtons: [
+      ['subscript', 'superscript', 'fontName'],
+      ['fontSize', 'insertImage', 'insertVideo', 'backgroundColor', 'customClasses']
+    ]
+  };
 
   ngOnInit(): void {
     if (this.editMode) {
@@ -279,4 +306,6 @@ export class EventFormComponent implements OnInit {
   clearCurrentImage(): void {
     this.currentImageUrl = null;
   }
+
+
 }

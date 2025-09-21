@@ -51,34 +51,32 @@
                class="img-fluid" alt="Obrázek akce"/>
         </div>
       </div>
-    </div>
+      <ng-container *ngIf="eventsService.eventDetail.fullDescription">
+        <hr>
+        <div class="mb-1 pt-0 card-body" [innerHTML]="eventsService.eventDetail.fullDescription"></div>
+      </ng-container>
 
-    <div class="list-group-item" *ngIf="eventsService.eventDetail.fullDescription">
-      <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">Podrobný popis</h5>
+      <div *ngIf="authenticationService.isEventsManager()">
+        <ul class="list-group list-group-horizontal">
+          <li class="list-group-item border-0">
+            <button class="btn btn-secondary" (click)="onModifyButtonClicked()"
+                    data-toggle="modal" data-target="#exampleModal"
+                    data-backdrop="static" data-keyboard="false">
+              Upravit akci
+            </button>
+          </li>
+
+          <li class="list-group-item border-0">
+            <button class="btn btn-secondary" (click)="onManageLinkedStatesClicked()">
+              Spravovat připojené stavy klubu
+            </button>
+          </li>
+
+          <li class="list-group-item border-0">
+            <button class="btn btn-danger" (click)="onDeleteButtonClicked()">Zrušit akci</button>
+          </li>
+        </ul>
       </div>
-      <p class="mb-1">{{eventsService.eventDetail.fullDescription}}</p>
     </div>
-    <div *ngIf="authenticationService.isEventsManager()" class="list-group-item">
-      <ul class="list-group list-group-horizontal">
-        <li class="list-group-item border-0">
-          <button class="btn btn-secondary" (click)="onModifyButtonClicked()"
-                  data-toggle="modal" data-target="#exampleModal"
-                  data-backdrop="static" data-keyboard="false">
-            Upravit akci
-          </button>
-        </li>
-
-        <li class="list-group-item border-0">
-          <button class="btn btn-secondary" (click)="onManageLinkedStatesClicked()">
-            Spravovat připojené stavy klubu
-          </button>
-        </li>
-
-        <li class="list-group-item border-0">
-          <button class="btn btn-danger" (click)="onDeleteButtonClicked()">Zrušit akci</button>
-        </li>
-      </ul>
     </div>
-  </div>
 </ng-container>
