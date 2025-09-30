@@ -1,20 +1,20 @@
 <app-back-arrow heading="Detail úklidu"></app-back-arrow>
 
-<ng-container *ngIf="cleaningsService.cleaningDetail?.name">
+<ng-container *ngIf="cleaningsService.cleaningDetail">
   <h2 *ngIf="cleaningsService.cleaningDetail.name" class="mb-1">{{cleaningsService.cleaningDetail.name}}</h2>
-  <div class="">
+  <div>
     <div class="card">
       <div class="row no-gutters">
         <div class="col">
           <div class="card-body">
-            <div class="" *ngIf="cleaningsService.cleaningDetail.cleaningInstructions">
+            <div *ngIf="cleaningsService.cleaningDetail.cleaningInstructions">
               <div class="d-flex w-100 justify-content-between">
                 <h4 class="mb-1">Instrukce</h4>
               </div>
               <p class="mb-2">{{cleaningsService.cleaningDetail.cleaningInstructions}}</p>
             </div>
 
-            <div class="">
+            <div>
               <div class="d-flex w-100 justify-content-between">
                 <h4 class="mb-1">Termín konání</h4>
               </div>

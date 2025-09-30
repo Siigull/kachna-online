@@ -226,24 +226,6 @@ export class CleaningFormComponent implements OnInit {
     if (!this.showOtherPlace) {
       this.form.get('otherPlace')?.reset();
     }
-
-    // Auto-set cleaningInstructions depending on the place
-    switch (value) {
-      case 'park':
-        this.form.get('cleaningInstructions')?.setValue('Sbírejte odpadky v parku a roztřiďte plasty, sklo a papír.');
-        break;
-      case 'school':
-        this.form.get('cleaningInstructions')?.setValue('Zaměřte se na školní dvůr, hřiště a okolní chodníky.');
-        break;
-      case 'street':
-        this.form.get('cleaningInstructions')?.setValue('Ukliďte chodníky, zastávky a veřejné koše.');
-        break;
-      case 'other':
-        this.form.get('cleaningInstructions')?.reset(); // let user type freely
-        break;
-      default:
-        this.form.get('cleaningInstructions')?.reset();
-    }
   }
 
   removeAssignedUser(userId: number) {
