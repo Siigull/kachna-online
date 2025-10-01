@@ -24,8 +24,8 @@
                 <a [routerLink]="['/cleanings', c.id]" *ngIf="c.cleaningInstructions.length > maxCleaningInstructionsChars">...</a>
               </div>
               <div class="small">
-                <p *ngFor="let user of c.idsToUsername">
-                  {{user.item2}},
+                <p *ngFor="let user of c.assignedUsersDtos">
+                  {{user.nickname}},
                 </p>
               </div>
               <div class="small" *ngIf="c.to.getTime() > now.getTime() && !c.finished">

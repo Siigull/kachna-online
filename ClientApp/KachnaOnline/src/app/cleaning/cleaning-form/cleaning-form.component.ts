@@ -17,7 +17,7 @@ import { Observable, throwError } from "rxjs";
 import { HttpStatusCode } from "@angular/common/http";
 import { DateUtils } from "../../shared/utils/date-utils";
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
-import { UserDetail } from 'src/app/models/users/user.model';
+import { User, UserDetail } from 'src/app/models/users/user.model';
 
 @Component({
   selector: 'app-cleaning-form',
@@ -66,7 +66,7 @@ export class CleaningFormComponent implements OnInit {
     place: ["", Validators.maxLength(256)],
     assignedUsersIds: [[]],
     idealParticipantsCount: [3, [Validators.required, Validators.min(1), Validators.max(100)]],
-    idsToUsername: [[]],
+    assignedUsersDtos: [[]],
     fromDate: [this.calendar.getToday(), Validators.required],
     fromTime: [{hour: new Date().getHours(), minute: new Date().getMinutes()}, Validators.required],
     toDate: [this.calendar.getToday(), Validators.required],
@@ -98,7 +98,7 @@ export class CleaningFormComponent implements OnInit {
             this.form.controls.cleaningInstructions.setValue(edittedCleaning.cleaningInstructions);
             this.form.controls.place.setValue(edittedCleaning.place);
             this.form.controls.assignedUsersIds.setValue(edittedCleaning.assignedUsersIds);
-            this.form.controls.idsToUsername.setValue(edittedCleaning.idsToUsername);
+            this.form.controls.assignedUsersDtos.setValue(edittedCleaning.assignedUsersDtos);
             this.form.controls.idealParticipantsCount.setValue(edittedCleaning.idealParticipantsCount);
             this.form.controls.fromDate.setValue(this.nativeDateAdapter.fromModel(edittedCleaning.from));
             this.form.controls.fromTime.setValue({
@@ -230,16 +230,16 @@ export class CleaningFormComponent implements OnInit {
 
   removeAssignedUser(userId: number) {
     const assignedUsers = this.form.controls.assignedUsersIds.value as number[];
-    const idsToUsername = this.form.controls.idsToUsername.value as {item1: number, item2: string}[];
+    const assignedUsersDtos = this.form.controls.assignedUsersDtos.value as User[];
     const indexAss = assignedUsers.indexOf(userId);
-    const indexId = idsToUsername.findIndex(obj => obj.item1 == userId);
+    const indexId = assignedUsersDtos.findIndex(obj => obj.id == userId);
     if(indexAss == -1) {
       this.toastr.error('Uživatel byl již smazán.', 'Upravit přiřazené uživatele');
       return;
     }
     assignedUsers.splice(indexAss, 1); // remove from array
     this.form.controls.assignedUsersIds.setValue([...assignedUsers]); // trigger change
-    idsToUsername.splice(indexId, 1);
-    this.form.controls.idsToUsername.setValue([...idsToUsername]);
+    assignedUsersDtos.splice(indexId, 1);
+    this.form.controls.assignedUsersDtos.setValue([...assignedUsersDtos]);
   }
 }

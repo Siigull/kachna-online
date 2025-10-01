@@ -10,6 +10,7 @@ using KachnaOnline.Business.Exceptions.Cleanings;
 using KachnaOnline.Business.Models.Cleanings;
 using KachnaOnline.Business.Services.Abstractions;
 using KachnaOnline.Dto.Cleanings;
+using KachnaOnline.Dto.Users;
 using Microsoft.AspNetCore.Http;
 
 namespace KachnaOnline.Business.Facades
@@ -35,12 +36,12 @@ namespace KachnaOnline.Business.Facades
             var usersTask = _userService.GetUsers(cleaningDto.AssignedUsersIds.ToList());
             var users = await usersTask;
 
-            cleaningDto.IdsToUsername = new Tuple<int, string>[users.Count()];
+            cleaningDto.AssignedUsersDtos = new UserDto[users.Count()];
 
             var i = 0;
             foreach (var user in users)
             {
-                cleaningDto.IdsToUsername[i] = Tuple.Create(user.Id, user.Nickname);
+                cleaningDto.AssignedUsersDtos[i] = _mapper.Map<UserDto>(user);
                 i++;
             }
 

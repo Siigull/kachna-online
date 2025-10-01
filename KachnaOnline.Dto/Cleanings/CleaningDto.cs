@@ -1,4 +1,5 @@
 using System;
+using KachnaOnline.Dto.Users;
 
 namespace KachnaOnline.Dto.Cleanings
 {
@@ -14,9 +15,9 @@ namespace KachnaOnline.Dto.Cleanings
         public int Id { get; set; }
 
         /// <summary>
-        /// Linked in cleaning service to show usernames, not just user ids, under cleanings
-        /// Format is {ID, username}[]
+        /// Only returned from backend to load usernames.
+        /// Base only has user ids.
         /// </summary>
-        public Tuple<int, string>[] IdsToUsername { get; set; }
+        public UserDto[] AssignedUsersDtos { get; set; }
     }
 }
