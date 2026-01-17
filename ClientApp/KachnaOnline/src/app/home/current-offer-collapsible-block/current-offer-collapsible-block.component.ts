@@ -8,8 +8,15 @@ import { ClubStateTypes } from "../../models/states/club-state-types.model";
   styleUrls: ['./current-offer-collapsible-block.component.css', '../home.component.css']
 })
 export class CurrentOfferCollapsibleBlockComponent {
-  currentOfferCollapsed: boolean = true;
   @Input() state: ClubState;
+  @Input() unroll: boolean = false;
+  currentOfferCollapsed: boolean = true;
 
   ST = ClubStateTypes;
+
+  ngOnChanges() {
+    if (this.unroll === true) {
+      this.currentOfferCollapsed = false;
+    }
+  }
 }
